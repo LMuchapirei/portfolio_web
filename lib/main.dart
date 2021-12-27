@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:portfolio_web/blog.dart';
 import 'package:portfolio_web/portfolio_theme.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:portfolio_web/resume.dart';
 
 void main() {
   runApp(const MyApp());
@@ -31,10 +33,16 @@ class _MyAppState extends State<MyApp> {
       title: 'Flutter Demo',
       theme: theme,
       debugShowCheckedModeBanner: false,
-      home: MyHomePage(
-        darkMode: toggleDarkMode,
-        isDark: darkMode,
-      ),
+      initialRoute: MyHomePage.route,
+      routes: {
+        ResumePage.route: (context) => ResumePage(
+              darkMode: toggleDarkMode,
+              isDark: darkMode,
+            ),
+        BlogPage.route: (context) => BlogPage(),
+        MyHomePage.route: (context) =>
+            MyHomePage(darkMode: toggleDarkMode, isDark: darkMode)
+      },
     );
   }
 }
@@ -105,6 +113,7 @@ final mySkills = <Skill>[
 class MyHomePage extends StatefulWidget {
   final Function darkMode;
   final bool isDark;
+  static const String route = "/home";
 
   const MyHomePage({Key? key, required this.darkMode, required this.isDark})
       : super(key: key);
@@ -157,16 +166,38 @@ class _MyHomePageState extends State<MyHomePage> {
                   SizedBox(
                     width: 10,
                   ),
-                  Text(
-                    "Resume",
-                    style: Theme.of(context).textTheme.bodyText1,
+                      GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).pushNamed(MyHomePage.route);
+                    },
+                    child: Text(
+                      "Home",
+                      style: Theme.of(context).textTheme.bodyText1,
+                    ),
                   ),
                   SizedBox(
                     width: 10,
                   ),
-                  Text(
-                    "Projects",
-                    style: Theme.of(context).textTheme.bodyText1,
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).pushNamed(ResumePage.route);
+                    },
+                    child: Text(
+                      "Resume",
+                      style: Theme.of(context).textTheme.bodyText1,
+                    ),
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).pushNamed(BlogPage.route);
+                    },
+                    child: Text(
+                      "Blog",
+                      style: Theme.of(context).textTheme.bodyText1,
+                    ),
                   ),
                   SizedBox(
                     width: 10,
@@ -444,10 +475,6 @@ class _MyHomePageState extends State<MyHomePage> {
                   ],
                 ),
               ),
-              Container(
-                  color: Colors.white,
-                  height: 150.0,
-                  child: Center(child: Text("Comming Soon"))),
             ],
           ),
         ),
